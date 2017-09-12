@@ -47,7 +47,7 @@ namespace Common.Utility
         /// <returns>验证成功返回ture 失败则返回false</returns>
         public static bool IsDecimal(string decimalNum)
         {
-            return Regex.IsMatch(decimalNum + string.Empty, @"^\d+(\.\d+)?$");
+            return Regex.IsMatch(decimalNum + string.Empty, @"^\d+(\.\d+)?$" );
         }
 
         /// <summary>
