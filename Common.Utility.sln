@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Utility", "Common.Ut
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Utility.Tests", "Common.Utility.Tests\Common.Utility.Tests.csproj", "{7C2C9809-AC9A-41D2-9064-E27DA31BAF91}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Utility.Logene", "Common.Utility.Logene\Common.Utility.Logene.csproj", "{8FA02E51-D7C0-434A-8752-BD9E475E7C19}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{7C2C9809-AC9A-41D2-9064-E27DA31BAF91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C2C9809-AC9A-41D2-9064-E27DA31BAF91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C2C9809-AC9A-41D2-9064-E27DA31BAF91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FA02E51-D7C0-434A-8752-BD9E475E7C19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FA02E51-D7C0-434A-8752-BD9E475E7C19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FA02E51-D7C0-434A-8752-BD9E475E7C19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FA02E51-D7C0-434A-8752-BD9E475E7C19}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
