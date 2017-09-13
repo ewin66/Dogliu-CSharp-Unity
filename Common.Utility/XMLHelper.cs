@@ -15,98 +15,72 @@ namespace Common.Utility
     /// </summary>
     public class XMLHelper
     {
+        #region 反序列化
         /// <summary>
-        /// 序列化XML字符串
+        /// 反序列化
         /// </summary>
+        /// <param name="type">类型</param>
+        /// <param name="xml">XML字符串</param>
+        /// <returns></returns>
+        public static T Deserialize<T>(string xml) where T : class
+        {
+            try
+            {
+                using (StringReader sr = new StringReader(xml))
+                {
+                    XmlSerializer xmldes = new XmlSerializer(typeof(T));
+                    return (T)xmldes.Deserialize(sr);
+                }
+            }
+            catch (Exception e)
+            {
+
+                return null;
+            }
+        }
+        /// <summary>
+        /// 反序列化
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="xml"></param>
+        /// <returns></returns>
+        public static object Deserialize(Type type, Stream stream)
+        {
+            XmlSerializer xmldes = new XmlSerializer(type);
+            return xmldes.Deserialize(stream);
+        }
+        #endregion
+
+        #region 序列化
+        /// <summary>
+        /// 序列化
+        /// </summary>
+        /// <param name="type">类型</param>
         /// <param name="obj">对象</param>
         /// <returns></returns>
-        public static string ToWeChatXml(object obj)
+        public static string Serializer(Type type, object obj)
         {
+            MemoryStream Stream = new MemoryStream();
+            XmlSerializer xml = new XmlSerializer(type);
             try
             {
-                if (obj == null)
-                    throw new Exception("Object Is Null");
-                PropertyInfo[] Properties = obj.GetType().GetProperties();
-                string xml = "<xml>";
-                foreach (PropertyInfo p in Properties)
-                {
-                    xml += "<" + p.Name + ">" + "<![CDATA[" + p.GetValue(obj, null) + "]]></" + p.Name + ">";
-                }
-
-                xml += "</xml>";
-                return xml;
+                //序列化对象
+                xml.Serialize(Stream, obj);
             }
-            catch (Exception ex)
+            catch (InvalidOperationException)
             {
-                throw ex;
+                throw;
             }
+            Stream.Position = 0;
+            StreamReader sr = new StreamReader(Stream);
+            string str = sr.ReadToEnd();
+
+            sr.Dispose();
+            Stream.Dispose();
+
+            return str;
         }
 
-        /// <summary>
-        /// 序列化XML字符串
-        /// </summary>
-        /// <param name="obj">字典对象</param>
-        /// <returns></returns>
-        public static string ToWeChatXml(Dictionary<string, object> obj)
-        {
-            try
-            {
-                if (obj == null || obj.Count <= 0)
-                    throw new Exception("Object Is Null");
-
-                string xml = "<xml>";
-                foreach (var key in obj.Keys)
-                {
-                    xml += "<" + key + ">" + "<![CDATA[" + obj[key] + "]]></" + key + ">";
-                }
-                xml += "</xml>";
-                return xml;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        /// <summary>
-        /// 序列化XML字符串
-        /// </summary>
-        /// <param name="obj">对象</param>
-        /// <returns></returns>
-        public static string ToXml(object obj, Encoding encoding, bool? removeXmlHeader = false)
-        {
-            var xml = "";
-            MemoryStream stream = null;
-
-            try
-            {
-                XmlWriterSettings settings = new XmlWriterSettings();
-                settings.Encoding = encoding;
-                settings.Indent = true;
-                settings.OmitXmlDeclaration = removeXmlHeader.Value;
-
-                XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-                ns.Add("", "");
-
-                XmlSerializer xs = new XmlSerializer(obj.GetType());
-
-                stream = new MemoryStream();
-                using (XmlWriter writer = XmlWriter.Create(stream, settings))
-                {
-                    xs.Serialize(writer, obj, ns);
-                }
-                xml = encoding.GetString(stream.ToArray());
-                return xml;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                if (stream != null)
-                    stream.Dispose();
-            }
-        }
+        #endregion
     }
 }
